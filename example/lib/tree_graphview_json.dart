@@ -42,10 +42,16 @@ class _TreeViewPageFromJsonState extends State<TreeViewPageFromJson> {
                   width: 100,
                   child: TextFormField(
                     initialValue: builder.siblingSeparation.toString(),
-                    decoration: InputDecoration(labelText: 'Sibling Separation'),
+                    decoration:
+                        InputDecoration(labelText: 'Sibling Separation'),
                     onChanged: (text) {
-                      builder.siblingSeparation = int.tryParse(text) ?? 100;
-                      setState(() {});
+                      builder = BuchheimWalkerConfiguration(
+                          siblingSeparation: int.tryParse(text) ?? 100,
+                          levelSeparation: builder.levelSeparation,
+                          subtreeSeparation: builder.subtreeSeparation,
+                          orientation: builder.orientation);
+
+                      this.setState(() {});
                     },
                   ),
                 ),
@@ -55,8 +61,12 @@ class _TreeViewPageFromJsonState extends State<TreeViewPageFromJson> {
                     initialValue: builder.levelSeparation.toString(),
                     decoration: InputDecoration(labelText: 'Level Separation'),
                     onChanged: (text) {
-                      builder.levelSeparation = int.tryParse(text) ?? 100;
-                      setState(() {});
+                      builder = BuchheimWalkerConfiguration(
+                          siblingSeparation: builder.siblingSeparation,
+                          levelSeparation: int.tryParse(text) ?? 100,
+                          subtreeSeparation: builder.subtreeSeparation,
+                          orientation: builder.orientation);
+                      this.setState(() {});
                     },
                   ),
                 ),
@@ -64,10 +74,15 @@ class _TreeViewPageFromJsonState extends State<TreeViewPageFromJson> {
                   width: 100,
                   child: TextFormField(
                     initialValue: builder.subtreeSeparation.toString(),
-                    decoration: InputDecoration(labelText: 'Subtree separation'),
+                    decoration:
+                        InputDecoration(labelText: 'Subtree separation'),
                     onChanged: (text) {
-                      builder.subtreeSeparation = int.tryParse(text) ?? 100;
-                      setState(() {});
+                      builder = BuchheimWalkerConfiguration(
+                          siblingSeparation: builder.siblingSeparation,
+                          levelSeparation: builder.levelSeparation,
+                          subtreeSeparation: int.tryParse(text) ?? 100,
+                          orientation: builder.orientation);
+                      this.setState(() {});
                     },
                   ),
                 ),
@@ -77,8 +92,12 @@ class _TreeViewPageFromJsonState extends State<TreeViewPageFromJson> {
                     initialValue: builder.orientation.toString(),
                     decoration: InputDecoration(labelText: 'Orientation'),
                     onChanged: (text) {
-                      builder.orientation = int.tryParse(text) ?? 100;
-                      setState(() {});
+                      builder = BuchheimWalkerConfiguration(
+                          siblingSeparation: builder.siblingSeparation,
+                          levelSeparation: builder.levelSeparation,
+                          subtreeSeparation: builder.subtreeSeparation,
+                          orientation: int.tryParse(text) ?? 0);
+                      this.setState(() {});
                     },
                   ),
                 ),
@@ -92,7 +111,8 @@ class _TreeViewPageFromJsonState extends State<TreeViewPageFromJson> {
                   maxScale: 5.6,
                   child: GraphView(
                     graph: graph,
-                    algorithm: BuchheimWalkerAlgorithm(builder, TreeEdgeRenderer(builder)),
+                    algorithm: BuchheimWalkerAlgorithm(
+                        builder, TreeEdgeRenderer(builder)),
                     paint: Paint()
                       ..color = Colors.green
                       ..strokeWidth = 1
@@ -101,7 +121,8 @@ class _TreeViewPageFromJsonState extends State<TreeViewPageFromJson> {
                       // I can decide what widget should be shown here based on the id
                       var a = node.key!.value as int?;
                       var nodes = json['nodes']!;
-                      var nodeValue = nodes.firstWhere((element) => element['id'] == a);
+                      var nodeValue =
+                          nodes.firstWhere((element) => element['id'] == a);
                       return rectangleWidget(nodeValue['label'] as String?);
                     },
                   )),
@@ -139,10 +160,10 @@ class _TreeViewPageFromJsonState extends State<TreeViewPageFromJson> {
       graph.addEdge(Node.Id(fromNodeId), Node.Id(toNodeId));
     });
 
-    builder
-      ..siblingSeparation = (100)
-      ..levelSeparation = (150)
-      ..subtreeSeparation = (150)
-      ..orientation = (BuchheimWalkerConfiguration.ORIENTATION_TOP_BOTTOM);
+    builder = BuchheimWalkerConfiguration(
+        siblingSeparation: 100,
+        levelSeparation: 100,
+        subtreeSeparation: 100,
+        orientation: 1);
   }
 }

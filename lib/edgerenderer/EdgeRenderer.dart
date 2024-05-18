@@ -1,6 +1,7 @@
 part of graphview;
 
 abstract class EdgeRenderer {
+  const EdgeRenderer();
   void render(Canvas canvas, Graph graph, Paint paint);
 }
 

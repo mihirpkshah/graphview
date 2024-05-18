@@ -1,10 +1,6 @@
 part of graphview;
 
 class BuchheimWalkerConfiguration {
-  int siblingSeparation = DEFAULT_SIBLING_SEPARATION;
-  int levelSeparation = DEFAULT_LEVEL_SEPARATION;
-  int subtreeSeparation = DEFAULT_SUBTREE_SEPARATION;
-  int orientation = DEFAULT_ORIENTATION;
   static const ORIENTATION_TOP_BOTTOM = 1;
   static const ORIENTATION_BOTTOM_TOP = 2;
   static const ORIENTATION_LEFT_RIGHT = 3;
@@ -14,15 +10,34 @@ class BuchheimWalkerConfiguration {
   static const DEFAULT_LEVEL_SEPARATION = 100;
   static const DEFAULT_ORIENTATION = 1;
 
-  int getSiblingSeparation() {
-    return siblingSeparation;
-  }
+  final int siblingSeparation; // = DEFAULT_SIBLING_SEPARATION;
+  final int levelSeparation; // = DEFAULT_LEVEL_SEPARATION;
+  final int subtreeSeparation; // = DEFAULT_SUBTREE_SEPARATION;
+  final int orientation; // = DEFAULT_ORIENTATION;
 
-  int getLevelSeparation() {
-    return levelSeparation;
-  }
+  BuchheimWalkerConfiguration(
+      {this.siblingSeparation = DEFAULT_SIBLING_SEPARATION,
+      this.levelSeparation = DEFAULT_LEVEL_SEPARATION,
+      this.subtreeSeparation = DEFAULT_SUBTREE_SEPARATION,
+      this.orientation = DEFAULT_ORIENTATION});
+}
 
-  int getSubtreeSeparation() {
-    return subtreeSeparation;
-  }
+class FamilyTreeBuchheimWalkerConfiguration
+    extends BuchheimWalkerConfiguration {
+  static const DEFAULT_SPOUSE_SEPARATION = 100;
+  final int spouseSeparation; // = DEFAULT_SPOUSE_SEPARATION;
+
+  FamilyTreeBuchheimWalkerConfiguration(
+      {int siblingSeparation =
+          BuchheimWalkerConfiguration.DEFAULT_SIBLING_SEPARATION,
+      int levelSeparation =
+          BuchheimWalkerConfiguration.DEFAULT_LEVEL_SEPARATION,
+      int subtreeSeparation =
+          BuchheimWalkerConfiguration.DEFAULT_SUBTREE_SEPARATION,
+      this.spouseSeparation = DEFAULT_SPOUSE_SEPARATION})
+      : super(
+            siblingSeparation: siblingSeparation,
+            levelSeparation: levelSeparation,
+            subtreeSeparation: subtreeSeparation,
+            orientation: BuchheimWalkerConfiguration.ORIENTATION_TOP_BOTTOM);
 }

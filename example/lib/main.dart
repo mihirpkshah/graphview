@@ -1,4 +1,5 @@
 import 'package:example/decision_tree_screen.dart';
+import 'package:example/familytree_graphview_json.dart';
 import 'package:example/layer_graphview.dart';
 import 'package:example/tree_graphview_json.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(home: Home());
@@ -31,6 +33,24 @@ class Home extends StatelessWidget {
       child: Scaffold(
         body: Center(
           child: Column(children: [
+            SizedBox(
+              height: 20,
+            ),
+            MaterialButton(
+                color: Colors.redAccent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => FamilyTreeViewPageFromJson(),
+                      ),
+                    ),
+                child: Text(
+                  'Family View From Json',
+                  style: TextStyle(fontSize: 30),
+                )),
             SizedBox(
               height: 20,
             ),
@@ -112,11 +132,11 @@ class Home extends StatelessWidget {
                   borderRadius: BorderRadius.circular(30),
                 ),
                 onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => LayerGraphPageFromJson(),
-                  ),
-                ),
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LayerGraphPageFromJson(),
+                      ),
+                    ),
                 child: Text(
                   'Layer Graph From Json ',
                   style: TextStyle(fontSize: 30),
@@ -153,7 +173,8 @@ class Home extends StatelessWidget {
 
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => GraphScreen(graph, builder, null)),
+                  MaterialPageRoute(
+                      builder: (context) => GraphScreen(graph, builder, null)),
                 );
               },
               color: Colors.blueAccent,
@@ -206,7 +227,8 @@ class Home extends StatelessWidget {
 
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => GraphScreen(graph, builder, null)),
+                  MaterialPageRoute(
+                      builder: (context) => GraphScreen(graph, builder, null)),
                 );
               },
               color: Colors.blueAccent,

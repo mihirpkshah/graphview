@@ -22,9 +22,15 @@ class _TreeViewPageState extends State<TreeViewPage> {
                   width: 100,
                   child: TextFormField(
                     initialValue: builder.siblingSeparation.toString(),
-                    decoration: InputDecoration(labelText: 'Sibling Separation'),
+                    decoration:
+                        InputDecoration(labelText: 'Sibling Separation'),
                     onChanged: (text) {
-                      builder.siblingSeparation = int.tryParse(text) ?? 100;
+                      builder = BuchheimWalkerConfiguration(
+                          siblingSeparation: int.tryParse(text) ?? 100,
+                          levelSeparation: builder.levelSeparation,
+                          subtreeSeparation: builder.subtreeSeparation,
+                          orientation: builder.orientation);
+
                       this.setState(() {});
                     },
                   ),
@@ -35,7 +41,11 @@ class _TreeViewPageState extends State<TreeViewPage> {
                     initialValue: builder.levelSeparation.toString(),
                     decoration: InputDecoration(labelText: 'Level Separation'),
                     onChanged: (text) {
-                      builder.levelSeparation = int.tryParse(text) ?? 100;
+                      builder = BuchheimWalkerConfiguration(
+                          siblingSeparation: builder.siblingSeparation,
+                          levelSeparation: int.tryParse(text) ?? 100,
+                          subtreeSeparation: builder.subtreeSeparation,
+                          orientation: builder.orientation);
                       this.setState(() {});
                     },
                   ),
@@ -44,9 +54,14 @@ class _TreeViewPageState extends State<TreeViewPage> {
                   width: 100,
                   child: TextFormField(
                     initialValue: builder.subtreeSeparation.toString(),
-                    decoration: InputDecoration(labelText: 'Subtree separation'),
+                    decoration:
+                        InputDecoration(labelText: 'Subtree separation'),
                     onChanged: (text) {
-                      builder.subtreeSeparation = int.tryParse(text) ?? 100;
+                      builder = BuchheimWalkerConfiguration(
+                          siblingSeparation: builder.siblingSeparation,
+                          levelSeparation: builder.levelSeparation,
+                          subtreeSeparation: int.tryParse(text) ?? 100,
+                          orientation: builder.orientation);
                       this.setState(() {});
                     },
                   ),
@@ -57,7 +72,11 @@ class _TreeViewPageState extends State<TreeViewPage> {
                     initialValue: builder.orientation.toString(),
                     decoration: InputDecoration(labelText: 'Orientation'),
                     onChanged: (text) {
-                      builder.orientation = int.tryParse(text) ?? 100;
+                      builder = BuchheimWalkerConfiguration(
+                          siblingSeparation: builder.siblingSeparation,
+                          levelSeparation: builder.levelSeparation,
+                          subtreeSeparation: builder.subtreeSeparation,
+                          orientation: int.tryParse(text) ?? 0);
                       this.setState(() {});
                     },
                   ),
@@ -65,7 +84,8 @@ class _TreeViewPageState extends State<TreeViewPage> {
                 ElevatedButton(
                   onPressed: () {
                     final node12 = Node.Id(r.nextInt(100));
-                    var edge = graph.getNodeAtPosition(r.nextInt(graph.nodeCount()));
+                    var edge =
+                        graph.getNodeAtPosition(r.nextInt(graph.nodeCount()));
                     print(edge);
                     graph.addEdge(edge, node12);
                     setState(() {});
@@ -82,7 +102,8 @@ class _TreeViewPageState extends State<TreeViewPage> {
                   maxScale: 5.6,
                   child: GraphView(
                     graph: graph,
-                    algorithm: BuchheimWalkerAlgorithm(builder, TreeEdgeRenderer(builder)),
+                    algorithm: BuchheimWalkerAlgorithm(
+                        builder, TreeEdgeRenderer(builder)),
                     paint: Paint()
                       ..color = Colors.green
                       ..strokeWidth = 1
@@ -146,10 +167,11 @@ class _TreeViewPageState extends State<TreeViewPage> {
     graph.addEdge(node4, node11, paint: Paint()..color = Colors.red);
     graph.addEdge(node11, node12);
 
-    builder
-      ..siblingSeparation = (100)
-      ..levelSeparation = (150)
-      ..subtreeSeparation = (150)
-      ..orientation = (BuchheimWalkerConfiguration.ORIENTATION_TOP_BOTTOM);
+    builder = BuchheimWalkerConfiguration(
+      siblingSeparation: 100,
+      levelSeparation: 150,
+      subtreeSeparation: 150,
+      orientation: BuchheimWalkerConfiguration.ORIENTATION_TOP_BOTTOM,
+    );
   }
 }
